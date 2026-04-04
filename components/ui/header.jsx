@@ -1,13 +1,13 @@
+'use client'
+
 import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './button';
 import { LayoutDashboard } from 'lucide-react';
 import { PenBox } from 'lucide-react';
-import { checkUser } from '@/lib/checkUser';
 
-const Header = async () => {
-  await checkUser();
+const Header = () => {
 
   return (
        <nav className="w-full px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">

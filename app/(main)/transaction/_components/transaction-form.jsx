@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useMemo } from "react";
+import { useForm, useController, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { format } from "date-fns";
@@ -49,8 +49,10 @@ export function AddTransactionForm({
     setValue,
     getValues,
     reset,
+    control,
   } = useForm({
     resolver: zodResolver(transactionSchema),
+    mode: 'onSubmit',
     defaultValues:
       editMode && initialData
         ? {
@@ -80,6 +82,11 @@ export function AddTransactionForm({
     fn: transactionFn,
     data: transactionResult,
   } = useFetch(editMode ? updateTransaction : createTransaction);
+
+  const typeField = useController({ name: "type", control });
+  const accountIdField = useController({ name: "accountId", control });
+  const categoryField = useController({ name: "category", control });
+  const recurringIntervalField = useController({ name: "recurringInterval", control });
 
   const onSubmit = (data) => {
     const formData = {
@@ -121,13 +128,14 @@ export function AddTransactionForm({
   }, [transactionResult, transactionLoading, editMode, reset, router]);
 
   /* eslint-disable react-hooks/incompatible-library */
-  const type = watch("type");
-  const isRecurring = watch("isRecurring");
-  const date = watch("date");
+  const type = useWatch({ control, name: "type" });
+  const isRecurring = useWatch({ control, name: "isRecurring" });
+  const date = useWatch({ control, name: "date" });
   /* eslint-enable react-hooks/incompatible-library */
 
-  const filteredCategories = categories.filter(
-    (category) => category.type === type
+  const filteredCategories = useMemo(
+    () => categories.filter((category) => category.type === type),
+    [categories, type]
   );
 
   return (
@@ -138,10 +146,7 @@ export function AddTransactionForm({
       {/* Type */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Type</label>
-        <Select
-          onValueChange={(value) => setValue("type", value)}
-          defaultValue={type}
-        >
+        <Select value={typeField.field.value} onValueChange={typeField.field.onChange}>
           <SelectTrigger>
             <SelectValue placeholder="Select type" />
           </SelectTrigger>
@@ -172,10 +177,7 @@ export function AddTransactionForm({
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Account</label>
-          <Select
-            onValueChange={(value) => setValue("accountId", value)}
-            defaultValue={getValues("accountId")}
-          >
+          <Select value={accountIdField.field.value} onValueChange={accountIdField.field.onChange}>
             <SelectTrigger>
               <SelectValue placeholder="Select account" />
             </SelectTrigger>
@@ -204,10 +206,7 @@ export function AddTransactionForm({
       {/* Category */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Category</label>
-        <Select
-          onValueChange={(value) => setValue("category", value)}
-          defaultValue={getValues("category")}
-        >
+        <Select value={categoryField.field.value} onValueChange={categoryField.field.onChange}>
           <SelectTrigger>
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
@@ -284,10 +283,7 @@ export function AddTransactionForm({
       {isRecurring && (
         <div className="space-y-2">
           <label className="text-sm font-medium">Recurring Interval</label>
-          <Select
-            onValueChange={(value) => setValue("recurringInterval", value)}
-            defaultValue={getValues("recurringInterval")}
-          >
+          <Select value={recurringIntervalField.field.value} onValueChange={recurringIntervalField.field.onChange}>
             <SelectTrigger>
               <SelectValue placeholder="Select interval" />
             </SelectTrigger>

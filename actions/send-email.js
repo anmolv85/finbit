@@ -14,7 +14,7 @@ export async function sendEmail({ to, subject, react }) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    console.log(`Sending email to: ${to}, subject: ${subject}`);
+    // Sending email - no logging needed in production
     
     const data = await resend.emails.send({
       from: "Finance App <onboarding@resend.dev>",
@@ -23,7 +23,7 @@ export async function sendEmail({ to, subject, react }) {
       react,
     });
 
-    console.log("Email sent successfully:", data);
+    // Email sent successfully - no logging needed in production
     return { success: true, data };
   } catch (error) {
     console.error("Failed to send email:", {
