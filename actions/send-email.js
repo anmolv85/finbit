@@ -17,7 +17,7 @@ export async function sendEmail({ to, subject, react }) {
     // Sending email - no logging needed in production
     
     const data = await resend.emails.send({
-      from: "Finance App <onboarding@resend.dev>",
+      from: "Finbit <onboarding@resend.dev>",
       to,
       subject,
       react,

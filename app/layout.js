@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/ui/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { checkUser } from "@/lib/checkUser";
 
 const inter = Inter({subsets: ["latin"],});
 
@@ -11,7 +12,9 @@ export const metadata = {
   description: "One stop finance management app for all your needs",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  await checkUser();
+
   return (
     <html lang="en">
       <body className={`${inter.className}`}>

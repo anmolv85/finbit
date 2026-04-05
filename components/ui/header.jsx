@@ -1,6 +1,6 @@
 'use client'
 
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './button';
@@ -18,7 +18,6 @@ const Header = () => {
              className="h-10 w-auto object-contain cursor-pointer hover:opacity-80 transition-opacity"
             />
         </Link>
-    <ClerkProvider>
       <div className="flex items-center gap-3 sm:gap-4">
 
         <Show when="signed-out">
@@ -57,7 +56,6 @@ const Header = () => {
                }}/>
             </Show>
         </div>
-    </ClerkProvider>
         </nav> 
   );
 };
