@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { useForm, useController, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { format } from "date-fns";
@@ -49,10 +49,8 @@ export function AddTransactionForm({
     setValue,
     getValues,
     reset,
-    control,
   } = useForm({
     resolver: zodResolver(transactionSchema),
-    mode: 'onSubmit',
     defaultValues:
       editMode && initialData
         ? {
@@ -72,6 +70,7 @@ export function AddTransactionForm({
             amount: "",
             description: "",
             accountId: accounts.find((ac) => ac.isDefault)?.id,
+            category: categories.find((cat) => cat.type === "EXPENSE")?.id || "",
             date: new Date(),
             isRecurring: false,
           },
@@ -82,11 +81,6 @@ export function AddTransactionForm({
     fn: transactionFn,
     data: transactionResult,
   } = useFetch(editMode ? updateTransaction : createTransaction);
-
-  const typeField = useController({ name: "type", control });
-  const accountIdField = useController({ name: "accountId", control });
-  const categoryField = useController({ name: "category", control });
-  const recurringIntervalField = useController({ name: "recurringInterval", control });
 
   const onSubmit = (data) => {
     const formData = {
@@ -125,17 +119,13 @@ export function AddTransactionForm({
       reset();
       router.push(`/account/${transactionResult.data.accountId}`);
     }
-  }, [transactionResult, transactionLoading, editMode, reset, router]);
+  }, [transactionResult, transactionLoading, editMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /* eslint-disable react-hooks/incompatible-library */
-  const type = useWatch({ control, name: "type" });
-  const isRecurring = useWatch({ control, name: "isRecurring" });
-  const date = useWatch({ control, name: "date" });
-  /* eslint-enable react-hooks/incompatible-library */
+  const watchedValues = watch();
+  const { type, isRecurring, date, accountId, category } = watchedValues;
 
-  const filteredCategories = useMemo(
-    () => categories.filter((category) => category.type === type),
-    [categories, type]
+  const filteredCategories = categories.filter(
+    (category) => category.type === type
   );
 
   return (
@@ -146,7 +136,14 @@ export function AddTransactionForm({
       {/* Type */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Type</label>
-        <Select value={typeField.field.value} onValueChange={typeField.field.onChange}>
+        <Select
+          onValueChange={(value) => {
+            setValue("type", value);
+            const newFiltered = categories.filter(cat => cat.type === value);
+            setValue("category", newFiltered[0]?.id || "");
+          }}
+          value={type}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select type" />
           </SelectTrigger>
@@ -177,7 +174,10 @@ export function AddTransactionForm({
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Account</label>
-          <Select value={accountIdField.field.value} onValueChange={accountIdField.field.onChange}>
+          <Select
+            onValueChange={(value) => setValue("accountId", value)}
+            value={accountId}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select account" />
             </SelectTrigger>
@@ -188,12 +188,12 @@ export function AddTransactionForm({
                 </SelectItem>
               ))}
               <CreateAccountDrawer>
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
                 >
                   Create Account
-                </button>
+                </Button>
               </CreateAccountDrawer>
             </SelectContent>
           </Select>
@@ -206,7 +206,10 @@ export function AddTransactionForm({
       {/* Category */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Category</label>
-        <Select value={categoryField.field.value} onValueChange={categoryField.field.onChange}>
+        <Select
+          onValueChange={(value) => setValue("category", value)}
+          value={category}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
@@ -283,7 +286,10 @@ export function AddTransactionForm({
       {isRecurring && (
         <div className="space-y-2">
           <label className="text-sm font-medium">Recurring Interval</label>
-          <Select value={recurringIntervalField.field.value} onValueChange={recurringIntervalField.field.onChange}>
+          <Select
+            onValueChange={(value) => setValue("recurringInterval", value)}
+            defaultValue={getValues("recurringInterval")}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select interval" />
             </SelectTrigger>
@@ -303,16 +309,15 @@ export function AddTransactionForm({
       )}
 
       {/* Actions */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-end">
         <Button
           type="button"
           variant="outline"
-          className="flex-1"
           onClick={() => router.back()}
         >
           Cancel
         </Button>
-        <Button type="submit" className="flex-1" disabled={transactionLoading}>
+        <Button type="submit" disabled={transactionLoading}>
           {transactionLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

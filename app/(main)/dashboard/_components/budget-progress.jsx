@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Pencil, Check, X } from "lucide-react";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
@@ -12,11 +13,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateBudget } from "@/actions/budget";
 
 export function BudgetProgress({ initialBudget, currentExpenses }) {
+  const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [newBudget, setNewBudget] = useState(
     initialBudget?.amount?.toString() || ""
@@ -49,14 +52,14 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
     setIsEditing(false);
   };
 
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (updatedBudget?.success) {
+      // eslint-disable-next-line
       setIsEditing(false);
       toast.success("Budget updated successfully");
+      router.refresh();
     }
-  }, [updatedBudget]);
-  /* eslint-enable react-hooks/set-state-in-effect */
+  }, [updatedBudget]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (error) {
@@ -125,18 +128,16 @@ export function BudgetProgress({ initialBudget, currentExpenses }) {
       <CardContent>
         {initialBudget && (
           <div className="space-y-2">
-            <div className="relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted">
-              <div
-                className={`size-full flex-1 transition-all ${
-                  percentUsed >= 90
-                    ? "bg-red-500"
-                    : percentUsed >= 75
-                      ? "bg-yellow-500"
-                      : "bg-green-500"
-                }`}
-                style={{ transform: `translateX(-${100 - (percentUsed || 0)}%)` }}
-              />
-            </div>
+            <Progress
+              value={percentUsed}
+              indicatorClassName={`${
+                percentUsed >= 90
+                  ? "bg-red-500"
+                  : percentUsed >= 75
+                    ? "bg-yellow-500"
+                    : "bg-green-500"
+              }`}
+            />
             <p className="text-xs text-muted-foreground text-right">
               {percentUsed.toFixed(1)}% used
             </p>
