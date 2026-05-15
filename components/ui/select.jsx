@@ -1,3 +1,7 @@
+// File purpose: components\ui\select.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -6,12 +10,14 @@ import { Select as SelectPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
+// Select: UI component used to render part of the Finbit interface and receive props from a parent.
 function Select({
   ...props
 }) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
+// SelectGroup: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectGroup({
   className,
   ...props
@@ -24,12 +30,14 @@ function SelectGroup({
   );
 }
 
+// SelectValue: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectValue({
   ...props
 }) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+// SelectTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectTrigger({
   className,
   size = "default",
@@ -53,6 +61,7 @@ function SelectTrigger({
   );
 }
 
+// SelectContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectContent({
   className,
   children,
@@ -88,6 +97,7 @@ function SelectContent({
   );
 }
 
+// SelectLabel: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectLabel({
   className,
   ...props
@@ -100,6 +110,7 @@ function SelectLabel({
   );
 }
 
+// SelectItem: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectItem({
   className,
   children,
@@ -124,6 +135,7 @@ function SelectItem({
   );
 }
 
+// SelectSeparator: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectSeparator({
   className,
   ...props
@@ -136,6 +148,7 @@ function SelectSeparator({
   );
 }
 
+// SelectScrollUpButton: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectScrollUpButton({
   className,
   ...props
@@ -153,6 +166,7 @@ function SelectScrollUpButton({
   );
 }
 
+// SelectScrollDownButton: UI component used to render part of the Finbit interface and receive props from a parent.
 function SelectScrollDownButton({
   className,
   ...props

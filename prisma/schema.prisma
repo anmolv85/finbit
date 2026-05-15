@@ -1,3 +1,7 @@
+// File purpose: prisma\schema.prisma
+// This file defines the database schema, models, relations, and data structure for Finbit.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,6 +10,7 @@ datasource db {
   provider = "postgresql"
 }
 
+// User: database table for Finbit data, with fields and relationships to other models.
 model User {
   id           String        @id @default(uuid())
   clerkUserId  String        @unique
@@ -21,6 +26,7 @@ model User {
   @@map("users")
 }
 
+// Account: database table for Finbit data, with fields and relationships to other models.
 model Account {
   id           String        @id @default(uuid())
   name         String
@@ -37,6 +43,7 @@ model Account {
   @@map("accounts")
 }
 
+// Transaction: database table for Finbit data, with fields and relationships to other models.
 model Transaction {
   id                String             @id @default(uuid())
   type              TransactionType
@@ -62,6 +69,7 @@ model Transaction {
   @@map("transactions")
 }
 
+// Budget: database table for Finbit data, with fields and relationships to other models.
 model Budget {
   id            String    @id @default(uuid())
   amount        Decimal
@@ -75,16 +83,19 @@ model Budget {
   @@map("budgets")
 }
 
+// AccountType: enum that defines allowed fixed values for a field.
 enum AccountType {
   CURRENT
   SAVINGS
 }
 
+// TransactionType: enum that defines allowed fixed values for a field.
 enum TransactionType {
   INCOME
   EXPENSE
 }
 
+// RecurringInterval: enum that defines allowed fixed values for a field.
 enum RecurringInterval {
   DAILY
   WEEKLY
@@ -92,6 +103,7 @@ enum RecurringInterval {
   YEARLY
 }
 
+// TransactionStatus: enum that defines allowed fixed values for a field.
 enum TransactionStatus {
   PENDING
   COMPLETED

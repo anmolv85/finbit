@@ -1,9 +1,14 @@
+// File purpose: components\ui\table.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+// Table: UI component used to render part of the Finbit interface and receive props from a parent.
 function Table({
   className,
   ...props
@@ -18,6 +23,7 @@ function Table({
   );
 }
 
+// TableHeader: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableHeader({
   className,
   ...props
@@ -30,6 +36,7 @@ function TableHeader({
   );
 }
 
+// TableBody: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableBody({
   className,
   ...props
@@ -42,6 +49,7 @@ function TableBody({
   );
 }
 
+// TableFooter: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableFooter({
   className,
   ...props
@@ -54,6 +62,7 @@ function TableFooter({
   );
 }
 
+// TableRow: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableRow({
   className,
   ...props
@@ -69,6 +78,7 @@ function TableRow({
   );
 }
 
+// TableHead: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableHead({
   className,
   ...props
@@ -84,6 +94,7 @@ function TableHead({
   );
 }
 
+// TableCell: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableCell({
   className,
   ...props
@@ -99,6 +110,7 @@ function TableCell({
   );
 }
 
+// TableCaption: UI component used to render part of the Finbit interface and receive props from a parent.
 function TableCaption({
   className,
   ...props

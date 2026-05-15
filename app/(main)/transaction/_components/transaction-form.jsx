@@ -1,7 +1,11 @@
+// File purpose: app\(main)\transaction\_components\transaction-form.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client";
 
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useCallback, useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { format } from "date-fns";
@@ -31,6 +35,7 @@ import { createTransaction, updateTransaction } from "@/actions/transaction";
 import { transactionSchema } from "@/app/lib/schema";
 import { ReceiptScanner } from "./recipt-scanner";
 
+// AddTransactionForm: React component that renders a form, handles input, and submits user data.
 export function AddTransactionForm({
   accounts,
   categories,
@@ -44,8 +49,8 @@ export function AddTransactionForm({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
-    watch,
     setValue,
     getValues,
     reset,
@@ -95,7 +100,7 @@ export function AddTransactionForm({
     }
   };
 
-  const handleScanComplete = (scannedData) => {
+  const handleScanComplete = useCallback((scannedData) => {
     if (scannedData) {
       setValue("amount", scannedData.amount.toString());
       setValue("date", new Date(scannedData.date));
@@ -107,7 +112,7 @@ export function AddTransactionForm({
       }
       toast.success("Receipt scanned successfully");
     }
-  };
+  }, [setValue]);
 
   useEffect(() => {
     if (transactionResult?.success && !transactionLoading) {
@@ -121,8 +126,12 @@ export function AddTransactionForm({
     }
   }, [transactionResult, transactionLoading, editMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const watchedValues = watch();
-  const { type, isRecurring, date, accountId, category } = watchedValues;
+  const type = useWatch({ control, name: "type" });
+  const isRecurring = useWatch({ control, name: "isRecurring" });
+  const date = useWatch({ control, name: "date" });
+  const accountId = useWatch({ control, name: "accountId" });
+  const category = useWatch({ control, name: "category" });
+  const recurringInterval = useWatch({ control, name: "recurringInterval" });
 
   const filteredCategories = categories.filter(
     (category) => category.type === type
@@ -138,9 +147,11 @@ export function AddTransactionForm({
         <label className="text-sm font-medium">Type</label>
         <Select
           onValueChange={(value) => {
+            const newFiltered = categories.filter((cat) => cat.type === value);
             setValue("type", value);
-            const newFiltered = categories.filter(cat => cat.type === value);
-            setValue("category", newFiltered[0]?.id || "");
+            if (!newFiltered.some((cat) => cat.id === category)) {
+              setValue("category", newFiltered[0]?.id || "");
+            }
           }}
           value={type}
         >
@@ -288,7 +299,7 @@ export function AddTransactionForm({
           <label className="text-sm font-medium">Recurring Interval</label>
           <Select
             onValueChange={(value) => setValue("recurringInterval", value)}
-            defaultValue={getValues("recurringInterval")}
+            value={recurringInterval || ""}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select interval" />

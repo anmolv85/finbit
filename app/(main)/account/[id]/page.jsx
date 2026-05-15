@@ -1,3 +1,7 @@
+// File purpose: app\(main)\account\[id]\page.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import { Suspense } from "react";
 import { getAccountWithTransactions } from "@/actions/accounts";
 import { BarLoader } from "react-spinners";
@@ -5,6 +9,7 @@ import { TransactionTable } from "../_components/transaction-table";
 import { notFound } from "next/navigation";
 import { AccountChart } from "../_components/account-chart";
 
+// AccountPage: page component that renders a full route and composes child sections.
 export default async function AccountPage({ params }) {
   const { id } = await params;
   

@@ -1,3 +1,7 @@
+// File purpose: app\(main)\dashboard\_components\budget-progress.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -18,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updateBudget } from "@/actions/budget";
 
+// BudgetProgress: UI component used to render part of the Finbit interface and receive props from a parent.
 export function BudgetProgress({ initialBudget, currentExpenses }) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);

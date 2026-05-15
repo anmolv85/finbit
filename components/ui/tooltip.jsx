@@ -1,3 +1,7 @@
+// File purpose: components\ui\tooltip.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -5,6 +9,7 @@ import { Tooltip as TooltipPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+// TooltipProvider: UI component used to render part of the Finbit interface and receive props from a parent.
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -12,18 +17,21 @@ function TooltipProvider({
   return (<TooltipPrimitive.Provider data-slot="tooltip-provider" delayDuration={delayDuration} {...props} />);
 }
 
+// Tooltip: UI component used to render part of the Finbit interface and receive props from a parent.
 function Tooltip({
   ...props
 }) {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 }
 
+// TooltipTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function TooltipTrigger({
   ...props
 }) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+// TooltipContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function TooltipContent({
   className,
   sideOffset = 0,

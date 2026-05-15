@@ -1,3 +1,7 @@
+// File purpose: components\ui\calendar.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -7,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
+// Calendar: UI component used to render part of the Finbit interface and receive props from a parent.
 function Calendar({
   className,
   classNames,
@@ -141,6 +146,7 @@ function Calendar({
   );
 }
 
+// CalendarDayButton: UI component used to render part of the Finbit interface and receive props from a parent.
 function CalendarDayButton({
   className,
   day,
@@ -159,7 +165,7 @@ function CalendarDayButton({
     <Button
       ref={ref}
       variant="ghost"
-      size="icon"
+      size=""
       data-day={day.date.toLocaleDateString(locale?.code)}
       data-selected-single={
         modifiers.selected &&

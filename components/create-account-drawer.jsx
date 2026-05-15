@@ -1,3 +1,7 @@
+// File purpose: components\create-account-drawer.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -27,6 +31,7 @@ import { Switch } from "@/components/ui/switch";
 import { createAccount } from "@/actions/dashboard";
 import { accountSchema } from "@/app/lib/schema";
 
+// CreateAccountDrawer: UI component used to render part of the Finbit interface and receive props from a parent.
 export function CreateAccountDrawer({ children }) {
   const [open, setOpen] = useState(false);
   const {

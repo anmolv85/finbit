@@ -1,3 +1,7 @@
+// File purpose: emails\template.jsx
+// This file defines email templates used to send transactional or notification emails.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import {
   Body,
   Container,
@@ -45,6 +49,7 @@ const PREVIEW_DATA = {
   },
 };
 
+// EmailTemplate: component that renders email body layout for outgoing messages.
 export default function EmailTemplate({
   userName = "",
   type = "monthly-report",

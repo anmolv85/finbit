@@ -1,3 +1,7 @@
+// File purpose: app\page.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import Herosection from "@/components/hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +10,7 @@ import { Show } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
+// Home: UI component used to render part of the Finbit interface and receive props from a parent.
 export default function Home() {
   return (
     <div>

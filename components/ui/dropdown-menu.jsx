@@ -1,3 +1,7 @@
+// File purpose: components\ui\dropdown-menu.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -6,24 +10,28 @@ import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 import { CheckIcon, ChevronRightIcon } from "lucide-react"
 
+// DropdownMenu: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenu({
   ...props
 }) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
+// DropdownMenuPortal: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuPortal({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />);
 }
 
+// DropdownMenuTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuTrigger({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />);
 }
 
+// DropdownMenuContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuContent({
   className,
   align = "start",
@@ -45,12 +53,14 @@ function DropdownMenuContent({
   );
 }
 
+// DropdownMenuGroup: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuGroup({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />);
 }
 
+// DropdownMenuItem: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuItem({
   className,
   inset,
@@ -70,6 +80,7 @@ function DropdownMenuItem({
   );
 }
 
+// DropdownMenuCheckboxItem: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuCheckboxItem({
   className,
   children,
@@ -99,12 +110,14 @@ function DropdownMenuCheckboxItem({
   );
 }
 
+// DropdownMenuRadioGroup: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuRadioGroup({
   ...props
 }) {
   return (<DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />);
 }
 
+// DropdownMenuRadioItem: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuRadioItem({
   className,
   children,
@@ -132,6 +145,7 @@ function DropdownMenuRadioItem({
   );
 }
 
+// DropdownMenuLabel: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuLabel({
   className,
   inset,
@@ -149,6 +163,7 @@ function DropdownMenuLabel({
   );
 }
 
+// DropdownMenuSeparator: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuSeparator({
   className,
   ...props
@@ -161,6 +176,7 @@ function DropdownMenuSeparator({
   );
 }
 
+// DropdownMenuShortcut: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuShortcut({
   className,
   ...props
@@ -176,12 +192,14 @@ function DropdownMenuShortcut({
   );
 }
 
+// DropdownMenuSub: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuSub({
   ...props
 }) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 
+// DropdownMenuSubTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuSubTrigger({
   className,
   inset,
@@ -203,6 +221,7 @@ function DropdownMenuSubTrigger({
   );
 }
 
+// DropdownMenuSubContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function DropdownMenuSubContent({
   className,
   ...props

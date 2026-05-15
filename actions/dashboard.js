@@ -1,3 +1,7 @@
+// File purpose: actions\dashboard.js
+// This file contains server-side action functions that manage business logic, database operations, and request flow for the Finbit app.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use server";
 
 import aj from "@/lib/arcjet";
@@ -7,6 +11,7 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { checkUser } from "@/lib/checkUser";
 
+// serializeTransaction: helper that converts database Decimal fields into plain JavaScript numbers for client use.
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
   if (obj.balance) {
@@ -18,6 +23,7 @@ const serializeTransaction = (obj) => {
   return serialized;
 };
 
+// getUserAccounts: server action that reads data, validates authorization, and returns results to the app.
 export async function getUserAccounts() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -50,6 +56,7 @@ export async function getUserAccounts() {
   }
 }
 
+// createAccount: server action that creates new data, enforces business rules, and returns the saved record.
 export async function createAccount(data) {
   try {
     const { userId } = await auth();
@@ -131,6 +138,7 @@ export async function createAccount(data) {
   }
 }
 
+// getDashboardData: server action that reads data, validates authorization, and returns results to the app.
 export async function getDashboardData() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");

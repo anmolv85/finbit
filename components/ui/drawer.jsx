@@ -1,3 +1,7 @@
+// File purpose: components\ui\drawer.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -5,30 +9,35 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
+// Drawer: UI component used to render part of the Finbit interface and receive props from a parent.
 function Drawer({
   ...props
 }) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />;
 }
 
+// DrawerTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerTrigger({
   ...props
 }) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
 
+// DrawerPortal: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerPortal({
   ...props
 }) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />;
 }
 
+// DrawerClose: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerClose({
   ...props
 }) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }
 
+// DrawerOverlay: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerOverlay({
   className,
   ...props
@@ -44,6 +53,7 @@ function DrawerOverlay({
   );
 }
 
+// DrawerContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerContent({
   className,
   children,
@@ -67,6 +77,7 @@ function DrawerContent({
   );
 }
 
+// DrawerHeader: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerHeader({
   className,
   ...props
@@ -82,6 +93,7 @@ function DrawerHeader({
   );
 }
 
+// DrawerFooter: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerFooter({
   className,
   ...props
@@ -94,6 +106,7 @@ function DrawerFooter({
   );
 }
 
+// DrawerTitle: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerTitle({
   className,
   ...props
@@ -106,6 +119,7 @@ function DrawerTitle({
   );
 }
 
+// DrawerDescription: UI component used to render part of the Finbit interface and receive props from a parent.
 function DrawerDescription({
   className,
   ...props

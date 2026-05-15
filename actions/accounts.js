@@ -1,3 +1,7 @@
+// File purpose: actions\accounts.js
+// This file contains server-side action functions that manage business logic, database operations, and request flow for the Finbit app.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use server";
 
 import { db } from "@/lib/prisma";
@@ -5,6 +9,7 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { checkUser } from "@/lib/checkUser";
 
+// serializeDecimal: server helper used by the Finbit backend for authenticated data operations.
 const serializeDecimal = (obj) => {
   const serialized = { ...obj };
   if (obj.balance) {
@@ -16,6 +21,7 @@ const serializeDecimal = (obj) => {
   return serialized;
 };
 
+// getAccountWithTransactions: server action that reads data, validates authorization, and returns results to the app.
 export async function getAccountWithTransactions(accountId) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -47,6 +53,7 @@ export async function getAccountWithTransactions(accountId) {
   };
 }
 
+// bulkDeleteTransactions: server helper used by the Finbit backend for authenticated data operations.
 export async function bulkDeleteTransactions(transactionIds) {
   try {
     const { userId } = await auth();
@@ -110,6 +117,7 @@ export async function bulkDeleteTransactions(transactionIds) {
   }
 }
 
+// updateDefaultAccount: server action that updates existing data and returns the updated result.
 export async function updateDefaultAccount(accountId) {
   try {
     const { userId } = await auth();

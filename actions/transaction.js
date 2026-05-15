@@ -1,3 +1,7 @@
+// File purpose: actions\transaction.js
+// This file contains server-side action functions that manage business logic, database operations, and request flow for the Finbit app.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
@@ -10,6 +14,7 @@ import { checkUser } from "@/lib/checkUser";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+// serializeAmount: helper that converts database Decimal fields into plain JavaScript numbers for client use.
 const serializeAmount = (obj) => {
   const serialized = { ...obj };
   if (obj.amount) {
@@ -22,6 +27,7 @@ const serializeAmount = (obj) => {
 };
 
 // Create Transaction
+// createTransaction: server action that creates new data, enforces business rules, and returns the saved record.
 export async function createTransaction(data) {
   try {
     const { userId } = await auth();
@@ -104,6 +110,7 @@ export async function createTransaction(data) {
   }
 }
 
+// getTransaction: server action that reads data, validates authorization, and returns results to the app.
 export async function getTransaction(id) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
@@ -124,6 +131,7 @@ export async function getTransaction(id) {
   return serializeAmount(transaction);
 }
 
+// updateTransaction: server action that updates existing data and returns the updated result.
 export async function updateTransaction(id, data) {
   try {
     const { userId } = await auth();
@@ -196,6 +204,7 @@ export async function updateTransaction(id, data) {
 }
 
 // Get User Transactions
+// getUserTransactions: server action that reads data, validates authorization, and returns results to the app.
 export async function getUserTransactions(query = {}) {
   try {
     const { userId } = await auth();
@@ -229,6 +238,7 @@ export async function getUserTransactions(query = {}) {
 }
 
 // Scan Receipt
+// scanReceipt: server action that scans a receipt file, parses AI output, and returns structured receipt information.
 export async function scanReceipt(file) {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-flash-lite-latest" });
@@ -302,6 +312,7 @@ export async function scanReceipt(file) {
 }
 
 // Helper function to calculate next recurring date
+// calculateNextRecurringDate: server helper used by the Finbit backend for authenticated data operations.
 function calculateNextRecurringDate(startDate, interval) {
   const date = new Date(startDate);
 

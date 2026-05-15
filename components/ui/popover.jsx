@@ -1,3 +1,7 @@
+// File purpose: components\ui\popover.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client"
 
 import * as React from "react"
@@ -5,18 +9,21 @@ import { Popover as PopoverPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
+// Popover: UI component used to render part of the Finbit interface and receive props from a parent.
 function Popover({
   ...props
 }) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
+// PopoverTrigger: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverTrigger({
   ...props
 }) {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />;
 }
 
+// PopoverContent: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverContent({
   className,
   align = "center",
@@ -38,12 +45,14 @@ function PopoverContent({
   );
 }
 
+// PopoverAnchor: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverAnchor({
   ...props
 }) {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />;
 }
 
+// PopoverHeader: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverHeader({
   className,
   ...props
@@ -56,6 +65,7 @@ function PopoverHeader({
   );
 }
 
+// PopoverTitle: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverTitle({
   className,
   ...props
@@ -68,6 +78,7 @@ function PopoverTitle({
   );
 }
 
+// PopoverDescription: UI component used to render part of the Finbit interface and receive props from a parent.
 function PopoverDescription({
   className,
   ...props

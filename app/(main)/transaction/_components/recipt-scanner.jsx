@@ -1,3 +1,7 @@
+// File purpose: app\(main)\transaction\_components\recipt-scanner.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use client";
 
 import { useRef, useEffect } from "react";
@@ -7,6 +11,7 @@ import { toast } from "sonner";
 import useFetch from "@/hooks/use-fetch";
 import { scanReceipt } from "@/actions/transaction";
 
+// ReceiptScanner: UI component used to render part of the Finbit interface and receive props from a parent.
 export function ReceiptScanner({ onScanComplete }) {
   const fileInputRef = useRef(null);
 
@@ -33,7 +38,8 @@ export function ReceiptScanner({ onScanComplete }) {
     } else if (scannedData === null && !scanReceiptLoading) {
       toast.error("Could not read receipt data. Please try a clearer photo.");
     }
-  }, [scanReceiptLoading, scannedData, onScanComplete]);
+  }, [scanReceiptLoading, scannedData]);
+
 
   // Handle server-side or network errors
   useEffect(() => {

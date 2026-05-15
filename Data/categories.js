@@ -1,3 +1,7 @@
+// File purpose: Data\categories.js
+// This file provides static data used by the landing pages and UI content.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 export const defaultCategories = [
   // Income Categories
   {

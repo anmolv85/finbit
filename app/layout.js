@@ -1,3 +1,7 @@
+// File purpose: app\layout.js
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/header";
@@ -10,8 +14,12 @@ const inter = Inter({subsets: ["latin"],});
 export const metadata = {
   title: "finbit",
   description: "One stop finance management app for all your needs",
+  icons: {
+    icon: "/econs.png",
+  },
 };
 
+// RootLayout: layout component that wraps pages and defines the shared structure for this route.
 export default async function RootLayout({ children }) {
   await checkUser();
 

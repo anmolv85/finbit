@@ -1,3 +1,7 @@
+// File purpose: app\(main)\dashboard\page.jsx
+// This file is part of the Next.js application routes, pages, or layout and defines how the user interface and data are rendered.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import { getUserAccounts } from "@/actions/dashboard";
 import { getDashboardData } from "@/actions/dashboard";
 import { getCurrentBudget } from "@/actions/budget";
@@ -8,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { DashboardOverview } from "./_components/transaction-overview";
 
+// DashboardPage: page component that renders a full route and composes child sections.
 export default async function DashboardPage() {
   const [accounts, transactions] = await Promise.all([
     getUserAccounts(),

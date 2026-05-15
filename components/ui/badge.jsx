@@ -1,3 +1,7 @@
+// File purpose: components\ui\badge.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import * as React from "react"
 import { cva } from "class-variance-authority";
 import { Slot } from "radix-ui"
@@ -27,6 +31,7 @@ const badgeVariants = cva(
   }
 )
 
+// Badge: UI component used to render part of the Finbit interface and receive props from a parent.
 function Badge({
   className,
   variant = "default",

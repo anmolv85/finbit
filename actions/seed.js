@@ -1,3 +1,7 @@
+// File purpose: actions\seed.js
+// This file contains server-side action functions that manage business logic, database operations, and request flow for the Finbit app.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use server";
 
 import { db } from "@/lib/prisma";
@@ -29,11 +33,13 @@ const CATEGORIES = {
 };
 
 // Helper to generate random amount within a range
+// getRandomAmount: server action that reads data, validates authorization, and returns results to the app.
 function getRandomAmount(min, max) {
   return Number((Math.random() * (max - min) + min).toFixed(2));
 }
 
 // Helper to get random category with amount
+// getRandomCategory: server action that reads data, validates authorization, and returns results to the app.
 function getRandomCategory(type) {
   const categories = CATEGORIES[type];
   const category = categories[Math.floor(Math.random() * categories.length)];
@@ -41,6 +47,7 @@ function getRandomCategory(type) {
   return { category: category.name, amount };
 }
 
+// seedTransactions: server helper used by the Finbit backend for authenticated data operations.
 export async function seedTransactions() {
   try {
     // Generate 90 days of transactions

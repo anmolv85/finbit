@@ -1,3 +1,7 @@
+// File purpose: components\ui\header.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 'use client'
 
 import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
@@ -7,6 +11,7 @@ import { Button } from './button';
 import { LayoutDashboard } from 'lucide-react';
 import { PenBox } from 'lucide-react';
 
+// Header: UI component used to render part of the Finbit interface and receive props from a parent.
 const Header = () => {
 
   return (

@@ -1,7 +1,12 @@
+// File purpose: actions\send-email.js
+// This file contains server-side action functions that manage business logic, database operations, and request flow for the Finbit app.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 "use server";
 
 import { Resend } from "resend";
 
+// sendEmail: server helper used by the Finbit backend for authenticated data operations.
 export async function sendEmail({ to, subject, react }) {
   if (!process.env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY is not set in environment");

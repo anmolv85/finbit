@@ -1,3 +1,7 @@
+// File purpose: components\ui\button.jsx
+// This file contains reusable UI components used throughout the Finbit interface.
+// It is written to help beginners understand how this file connects to the rest of the app.
+
 import * as React from "react"
 import { cva } from "class-variance-authority";
 import { Slot } from "radix-ui"
@@ -41,6 +45,7 @@ const buttonVariants = cva(
   }
 )
 
+// Button: UI component used to render part of the Finbit interface and receive props from a parent.
 function Button({
   className,
   variant = "default",
