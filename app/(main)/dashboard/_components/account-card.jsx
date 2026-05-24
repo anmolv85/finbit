@@ -4,10 +4,10 @@
 
 "use client";
 
-import { ArrowUpRight, ArrowDownRight, CreditCard } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Trash2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import useFetch from "@/hooks/use-fetch";
 import {
   Card,
@@ -17,7 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { updateDefaultAccount } from "@/actions/accounts";
+import { updateDefaultAccount, deleteAccount } from "@/actions/accounts";
 import { toast } from "sonner";
 
 // AccountCard: UI component used to render part of the Finbit interface and receive props from a parent.
@@ -31,6 +31,15 @@ export function AccountCard({ account }) {
     error,
   } = useFetch(updateDefaultAccount);
 
+  const {
+    loading: deleteLoading,
+    fn: deleteAccountFn,
+    data: deletedAccount,
+    error: deleteError,
+  } = useFetch(deleteAccount);
+
+  const router = useRouter();
+
   const handleDefaultChange = async (event) => {
     event.preventDefault(); // Prevent navigation
 
@@ -42,6 +51,21 @@ export function AccountCard({ account }) {
     await updateDefaultFn(id);
   };
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const confirmed = window.confirm(
+      `Delete account "${name}" and all associated transactions? This cannot be undone.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    await deleteAccountFn(id);
+  };
+
   useEffect(() => {
     if (updatedAccount?.success) {
       toast.success("Default account updated successfully");
@@ -49,43 +73,63 @@ export function AccountCard({ account }) {
   }, [updatedAccount]);
 
   useEffect(() => {
+    if (deletedAccount?.success) {
+      toast.success("Account deleted successfully");
+      router.refresh();
+    }
+  }, [deletedAccount, router]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error.message || "Failed to update default account");
     }
   }, [error]);
 
+  useEffect(() => {
+    if (deleteError) {
+      toast.error(deleteError.message || "Failed to delete account");
+    }
+  }, [deleteError]);
+
   return (
     <Card className="hover:shadow-md transition-shadow group relative">
-      <Link href={`/account/${id}`}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium capitalize">
-            {name}
-          </CardTitle>
-          <Switch
-            checked={isDefault}
-            onClick={handleDefaultChange}
-            disabled={updateDefaultLoading}
-          />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">
-            ₹{parseFloat(balance).toFixed(2)}
-          </div>
-          <p className="text-xs text-muted-foreground capitalize">
-            {type.charAt(0) + type.slice(1).toLowerCase()} Account
-          </p>
-        </CardContent>
-        <CardFooter className="flex justify-between text-sm text-muted-foreground">
+      <div className="flex h-full flex-col">
+        <Link href={`/account/${id}`} className="block flex-1">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium capitalize">
+              {name}
+            </CardTitle>
+            <Switch
+              checked={isDefault}
+              onClick={handleDefaultChange}
+              disabled={updateDefaultLoading}
+            />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              ₹{parseFloat(balance).toFixed(2)}
+            </div>
+            <p className="text-xs text-muted-foreground capitalize">
+              {type.charAt(0) + type.slice(1).toLowerCase()} Account
+            </p>
+          </CardContent>
+        </Link>
+        <CardFooter className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
           <div className="flex items-center">
             <ArrowUpRight className="mr-1 h-4 w-4 text-green-500" />
             Income
           </div>
-          <div className="flex items-center">
-            <ArrowDownRight className="mr-1 h-4 w-4 text-red-500" />
-            Expense
-          </div>
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleteLoading}
+            className="inline-flex items-center gap-1 rounded-md border border-transparent bg-red-50 px-3 py-1 text-xs font-medium text-red-700 transition hover:bg-red-100 disabled:opacity-50"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            {deleteLoading ? "Deleting..." : "Delete"}
+          </button>
         </CardFooter>
-      </Link>
+      </div>
     </Card>
   );
 }

@@ -5,6 +5,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/header";
+import { SupportDrawerFooter } from "@/components/support-drawer-footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { checkUser } from "@/lib/checkUser";
@@ -35,10 +36,10 @@ export default async function RootLayout({ children }) {
         </main>
         <Toaster richColors />
         {/*footer*/}
-        <footer className="bg-blue-100 text-white py-4 text-center">
-          <div className="container mx-auto px-4 text-center text-gray-600">
-            <p>© 2024 finbit. All rights reserved.</p>
-            <p>Anmol verma-234022030004 | Hitika-234022030014 | Saloni-234022030034 | Urvashi-234022030046 | Vanshika mathan-234022030047</p>
+        <footer className="bg-blue-100 py-4 text-center">
+          <div className="container mx-auto px-4 text-gray-600">
+            <p className="mb-2">© 2024 finbit. All rights reserved.</p>
+            <SupportDrawerFooter />
           </div>
         </footer>
         </ClerkProvider>
