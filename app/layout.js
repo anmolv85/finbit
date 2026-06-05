@@ -38,7 +38,7 @@ export default async function RootLayout({ children }) {
         {/*footer*/}
         <footer className="bg-blue-100 py-4 text-center">
           <div className="container mx-auto px-4 text-gray-600">
-            <p className="mb-2">© 2024 finbit. All rights reserved.</p>
+            <p className="mb-2">© 2026 finbit. All rights reserved.</p>
             <SupportDrawerFooter />
           </div>
         </footer>
