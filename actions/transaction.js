@@ -11,6 +11,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import aj from "@/lib/arcjet";
 import { request } from "@arcjet/next";
 import { checkUser } from "@/lib/checkUser";
+import { sendBudgetAlertForUser } from "@/lib/budget-alert";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -104,6 +105,12 @@ export async function createTransaction(data) {
     revalidatePath("/dashboard");
     revalidatePath(`/account/${transaction.accountId}`);
 
+    try {
+      await sendBudgetAlertForUser(user.id);
+    } catch (alertError) {
+      console.error("Budget alert failed after transaction create:", alertError);
+    }
+
     return { success: true, data: serializeAmount(transaction) };
   } catch (error) {
     throw new Error(error.message);
@@ -196,6 +203,14 @@ export async function updateTransaction(id, data) {
 
     revalidatePath("/dashboard");
     revalidatePath(`/account/${data.accountId}`);
+
+    if (originalTransaction.type === "EXPENSE" || data.type === "EXPENSE") {
+      try {
+        await sendBudgetAlertForUser(user.id);
+      } catch (alertError) {
+        console.error("Budget alert failed after transaction update:", alertError);
+      }
+    }
 
     return { success: true, data: serializeAmount(transaction) };
   } catch (error) {
